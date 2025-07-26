@@ -16,7 +16,7 @@ public class SmashConfigurationIntial extends AbstractAnnotationConfigDispatcher
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{SmashConfig.class, SmashConfig2.class, GunConfig.class, processConfig.class, ServiceConfig.class};
+        return new Class[]{SmashConfig.class, SmashConfig2.class, GunConfig.class, processConfig.class, ServiceConfig.class, BikeConfig.class, BulletConfig.class, SmashConfig3.class, SmashConfig4.class, SmashConfig5.class};
     }
 
     @Override
