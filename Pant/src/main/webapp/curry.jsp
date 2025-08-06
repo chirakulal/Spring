@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="curry" method="post">
+     <pre>
+    Curry Name:         <input type="text" name="name" />
+    Spice Level:        <input type="text" name="spiceLevel" />
+    Main Ingredient:    <input type="text" name="mainIngredient" />
+    Curry Type:         <input type="text" name="type" />
+    Quantity (ml):      <input type="number" name="quantity" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>

@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="egg" method="post">
+      <pre>
+    Egg Type:          <input type="text" name="type" />
+    Size :             <input type="int" name="size" />
+    Price :            <input type="long" name="price" />
+    Color:             <input type="text" name="color" />
+    Brand:             <input type="text" name="brand" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>

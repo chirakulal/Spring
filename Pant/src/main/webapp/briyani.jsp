@@ -9,8 +9,15 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="biryani" method="post">
-    <input type="submit" value="Submit"/>
 
+    <pre>
+      Biryani Type:  <input type="text" name="type" />
+         Spice_Level:<input type="text" name="spice"/>
+       Portion Size: <input type="text" name="size"/>
+       Accompaniments  :<input type="text" name="accompaniments"/>
+         RiceType:<input type="text" name="rice">
+    </pre>
+    <input type="submit" value="Submit"/>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>

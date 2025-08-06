@@ -9,7 +9,15 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="butter" method="post">
+    <pre>
+    Butter Type:       <input type="text" name="type" />
+    Fat Content (%):   <input type="text" name="fatContent" />
+    Salted/Unsalted:   <input type="text" name="saltType" />
+    Packaging Size:    <input type="text" name="packageSize" />
+    Brand Name:        <input type="text" name="brand" />
+</pre>
     <input type="submit" value="Submit"/>
+
 
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

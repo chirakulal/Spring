@@ -9,7 +9,16 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="chutney" method="post">
+    <pre>
+    Chutney Type:      <input type="text" name="type" />
+    Spice Level:       <input type="text" name="spiceLevel" />
+    Main Ingredient:   <input type="text" name="mainIngredient" />
+    Color:             <input type="text" name="color" />
+    Quantity (ml):     <input type="number" name="quantity" />
+</pre>
     <input type="submit" value="Submit"/>
+
+
 
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

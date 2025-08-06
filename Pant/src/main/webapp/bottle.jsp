@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="bottle" method="post">
+    <pre>
+      Bottle Material:  <input type="text" name="material" />
+        Bottle Capacity:<input type="text" name="capacity"/>
+        Bottle color: <input type="text" name="color"/>
+        Bottle shape :<input type="text" name="shape"/>
+        Bottle price:<input type="number" name="price">
+    </pre>
     <input type="submit" value="Submit"/>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
