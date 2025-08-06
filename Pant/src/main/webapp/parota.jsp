@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="parota" method="post">
+       <pre>
+    Parota Type:           <input type="text" name="type" />
+    Size (inches):         <input type="number" name="size" />
+    Number of Layers:      <input type="number" name="layers" />
+    Is Stuffed (true/false):<input type="text" name="stuffed" />
+    Flour Type:            <input type="text" name="flour" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>

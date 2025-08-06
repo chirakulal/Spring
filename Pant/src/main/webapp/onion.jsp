@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="onion" method="post">
+    <pre>
+    Onion Type:         <input type="text" name="type" />
+    Color:              <input type="text" name="color" />
+    Weight :     <input type="number" name="weight" />
+    Price :          <input type="number" name="price" />
+    Imported : <input type="text" name="imported" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>

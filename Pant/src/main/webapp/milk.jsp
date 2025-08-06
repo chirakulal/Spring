@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="milk" method="post">
+    <pre>
+    Milk Type:            <input type="text" name="type" />
+    Quantity :        <input type="number" name="quantity" />
+    Fat Percentage :   <input type="number" name="fatPercentage" />
+    Price:            <input type="number" name="price" />
+    Brand:                <input type="text" name="brand" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>
