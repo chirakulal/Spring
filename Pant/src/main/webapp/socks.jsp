@@ -8,7 +8,13 @@
 </head>
 <body>
 <h1>Hello, world!</h1>
-<form action="socks" method="post">
+<form action="socks" method="post"> <pre>
+    Size :             <input type="number" name="size" />
+    Material:          <input type="text" name="material" />
+    Color:             <input type="text" name="color" />
+    Length Type:       <input type="text" name="lengthType" />
+    Brand:             <input type="text" name="brand" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>

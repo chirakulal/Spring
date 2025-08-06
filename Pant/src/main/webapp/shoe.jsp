@@ -9,6 +9,13 @@
 <body>
 <h1>Hello, world!</h1>
 <form action="shoe" method="post">
+    <pre>
+    Shoe Size :         <input type="number" name="size" />
+    Material:           <input type="text" name="material" />
+    Color:              <input type="text" name="color" />
+    Type :              <input type="text" name="type" />
+    Brand:              <input type="text" name="brand" />
+        </pre>
     <input type="submit" value="Submit"/>
 
 </form>
