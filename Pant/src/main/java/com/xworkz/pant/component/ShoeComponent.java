@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.ShoeDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class ShoeComponent {
 
@@ -13,15 +15,13 @@ public class ShoeComponent {
     }
 
     @RequestMapping("/shoe")
-    public String shoeMethod(@RequestParam int size, @RequestParam String material,
-                             @RequestParam String color, @RequestParam String type,
-                             @RequestParam String brand) {
+    public String shoeMethod(ShoeDTO shoeDTO) {
 
-        System.out.println("Shoe Size: " + size);
-        System.out.println("Material: " + material);
-        System.out.println("Color: " + color);
-        System.out.println("Type: " + type);
-        System.out.println("Brand: " + brand);
+        System.out.println("Shoe Size: " + shoeDTO.getSize());
+        System.out.println("Material: " + shoeDTO.getMaterial());
+        System.out.println("Color: " + shoeDTO.getColor());
+        System.out.println("Type: " + shoeDTO.getType());
+        System.out.println("Brand: " + shoeDTO.getBrand());
         System.out.println("Method of ShoeComponent is called");
 
         return "shoe.jsp";

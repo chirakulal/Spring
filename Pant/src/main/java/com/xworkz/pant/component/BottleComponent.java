@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.BottleDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class BottleComponent {
 
@@ -13,12 +15,12 @@ public class BottleComponent {
     }
 
     @RequestMapping("/bottle")
-    public String BottleMethod(@RequestParam String material, @RequestParam String capacity,@RequestParam String color,@RequestParam String shape, @RequestParam int price){
-        System.out.println("Bottle material :"+material);
-        System.out.println("Bottle capacity :"+capacity);
-        System.out.println("Bottle color :"+color);
-        System.out.println("Bottle shape :"+shape);
-        System.out.println("Bottle price :"+price);
+    public String BottleMethod(BottleDTO bottleDTO){
+        System.out.println("Bottle material :"+bottleDTO.getMaterial());
+        System.out.println("Bottle capacity :"+bottleDTO.getCapacity());
+        System.out.println("Bottle color :"+bottleDTO.getColor());
+        System.out.println("Bottle shape :"+bottleDTO.getShape());
+        System.out.println("Bottle price :"+bottleDTO.getPrice());
 
 
 

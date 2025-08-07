@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.BiryaniDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class BiryaniComponent {
 
@@ -12,13 +14,12 @@ public class BiryaniComponent {
         System.out.println("No-argu const of BriyaniComponent...");
     }
     @RequestMapping("/biryani")
-    public String biryaniMethod(@RequestParam String type,@RequestParam String spice,@RequestParam String size,
-                                @RequestParam String accompaniments,@RequestParam String rice){
-        System.out.println("Briyani type: "+type);
-        System.out.println("Spice-level: "+spice);
-        System.out.println("Accompaniments : "+accompaniments);
-        System.out.println("briyani size :"+size);
-        System.out.println("Rice type: "+rice);
+    public String biryaniMethod(BiryaniDTO biryaniDTO){
+        System.out.println("Briyani type: "+biryaniDTO.getType());
+        System.out.println("Spice-level: "+biryaniDTO.getSpice());
+        System.out.println("Accompaniments : "+biryaniDTO.getAccompaniments());
+        System.out.println("briyani size :"+biryaniDTO.getSize());
+        System.out.println("Rice type: "+biryaniDTO.getRice());
         System.out.println("method of BriyaniComponent is called..");
         return "briyani.jsp";
     }

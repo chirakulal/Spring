@@ -1,25 +1,25 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.SockesDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class SocksComponent {
     public SocksComponent(){
         System.out.println("No-argu const of SocksComponent");
     }
     @RequestMapping("/socks")
-    public String socksMethod(@RequestParam int size, @RequestParam String material,
-                              @RequestParam String color, @RequestParam String lengthType,
-                              @RequestParam String brand) {
+    public String socksMethod(SockesDTO sockesDTO) {
 
-        System.out.println("Socks Size: " + size);
-        System.out.println("Material: " + material);
-        System.out.println("Color: " + color);
-        System.out.println("Length Type: " + lengthType);
-        System.out.println("Brand: " + brand);
+        System.out.println("Socks Size: " + sockesDTO.getSize());
+        System.out.println("Material: " + sockesDTO.getMaterial());
+        System.out.println("Color: " + sockesDTO.getColor());
+        System.out.println("Length Type: " + sockesDTO.getLengthType());
+        System.out.println("Brand: " + sockesDTO.getBrand());
         System.out.println("Method of SocksComponent is called");
 
         return "socks.jsp";

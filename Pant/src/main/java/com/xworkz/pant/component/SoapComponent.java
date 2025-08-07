@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.SoapDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class SoapComponent {
     public SoapComponent(){
@@ -12,15 +14,13 @@ public class SoapComponent {
     }
 
     @RequestMapping("/soap")
-    public String soapMethod(@RequestParam String name, @RequestParam int weight,
-                             @RequestParam String fragrance, @RequestParam double price,
-                             @RequestParam String brand) {
+    public String soapMethod(SoapDTO soapDTO) {
 
-        System.out.println("Soap Name: " + name);
-        System.out.println("Weight (g): " + weight);
-        System.out.println("Fragrance: " + fragrance);
-        System.out.println("Price: ₹" + price);
-        System.out.println("Brand: " + brand);
+        System.out.println("Soap Name: " + soapDTO.getName());
+        System.out.println("Weight (g): " + soapDTO.getWeight());
+        System.out.println("Fragrance: " + soapDTO.getFragrance());
+        System.out.println("Price: ₹" + soapDTO.getPrice());
+        System.out.println("Brand: " + soapDTO.getBrand());
         System.out.println("Method of SoapComponent is called");
 
         return "soap.jsp";

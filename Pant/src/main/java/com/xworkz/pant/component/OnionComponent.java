@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.OnionDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class OnionComponent {
 
@@ -12,15 +14,13 @@ public class OnionComponent {
         System.out.println("No-argu const of OnionComponent");
     }
     @RequestMapping("/onion")
-    public String onionMethod(@RequestParam String type, @RequestParam String color,
-                              @RequestParam int weight, @RequestParam double price,
-                              @RequestParam boolean imported) {
+    public String onionMethod(OnionDTO onionDTO) {
 
-        System.out.println("Onion Type: " + type);
-        System.out.println("Color: " + color);
-        System.out.println("Weight (grams): " + weight);
-        System.out.println("Price: ₹" + price);
-        System.out.println("Imported: " + imported);
+        System.out.println("Onion Type: " + onionDTO.getType());
+        System.out.println("Color: " + onionDTO.getColor());
+        System.out.println("Weight (grams): " + onionDTO.getWeight());
+        System.out.println("Price: ₹" + onionDTO.getPrice());
+        System.out.println("Imported: " + onionDTO.isImported());
         System.out.println("Method of OnionComponent is called");
 
         return "onion.jsp";

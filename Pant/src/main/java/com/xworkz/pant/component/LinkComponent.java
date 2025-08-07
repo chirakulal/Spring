@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.LInkDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class LinkComponent {
 
@@ -13,17 +15,13 @@ public class LinkComponent {
     }
 
     @RequestMapping("/on")
-    public String linkMethod(@RequestParam String fname,
-                             @RequestParam String lname,
-                             @RequestParam long number,
-                             @RequestParam String email,
-                             @RequestParam String address){
+    public String linkMethod(LInkDTO lInkDTO){
 
-        System.out.println("First Name :" + fname);
-        System.out.println("Last Name :" + lname);
-        System.out.println("Number :" + number);
-        System.out.println("Email : "+email);
-        System.out.println("Address :"+address);
+        System.out.println("First Name :" + lInkDTO.getFname());
+        System.out.println("Last Name :" + lInkDTO.getLname());
+        System.out.println("Number :" + lInkDTO.getNumber());
+        System.out.println("Email : "+lInkDTO.getEmail());
+        System.out.println("Address :"+lInkDTO.getAddress());
         System.out.println("method in link is called..");
         return "link.jsp";
     }

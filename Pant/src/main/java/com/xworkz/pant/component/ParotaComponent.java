@@ -1,10 +1,12 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.ParatoDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class ParotaComponent {
 
@@ -12,15 +14,13 @@ public class ParotaComponent {
         System.out.println("No-argu const of ParotaComponent...");
     }
     @RequestMapping("/parota")
-    public String parotaMethod(@RequestParam String type, @RequestParam int size,
-                               @RequestParam int layers, @RequestParam boolean stuffed,
-                               @RequestParam String flour) {
+    public String parotaMethod(ParatoDTO paratoDTO) {
 
-        System.out.println("Parota Type: " + type);
-        System.out.println("Size (inches): " + size);
-        System.out.println("Number of Layers: " + layers);
-        System.out.println("Is Stuffed: " + stuffed);
-        System.out.println("Flour Type: " + flour);
+        System.out.println("Parota Type: " + paratoDTO.getType());
+        System.out.println("Size (inches): " + paratoDTO.getSize());
+        System.out.println("Number of Layers: " + paratoDTO.getLayers());
+        System.out.println("Is Stuffed: " + paratoDTO.isStuffed());
+        System.out.println("Flour Type: " + paratoDTO.getFlour());
         System.out.println("Method of ParotaComponent is called");
 
         return "parota.jsp";

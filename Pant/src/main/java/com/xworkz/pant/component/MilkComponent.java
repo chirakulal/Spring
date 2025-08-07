@@ -1,24 +1,25 @@
 package com.xworkz.pant.component;
 
+import com.xworkz.pant.dto.MilkDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@Controller
 @RequestMapping("/")
 public class MilkComponent {
     public MilkComponent(){
         System.out.println("No-argu const of MilkComponent");
     }
     @RequestMapping("/milk")
-    public String milkMethod(@RequestParam String type, @RequestParam int quantity, @RequestParam double fatPercentage,
-                             @RequestParam double price, @RequestParam String brand) {
+    public String milkMethod(MilkDTO milkDTO) {
 
-        System.out.println("Milk Type: " + type);
-        System.out.println("Quantity (ml): " + quantity);
-        System.out.println("Fat Percentage: " + fatPercentage + "%");
-        System.out.println("Price: ₹" + price);
-        System.out.println("Brand: " + brand);
+        System.out.println("Milk Type: " + milkDTO.getType());
+        System.out.println("Quantity (ml): " + milkDTO.getQuantity());
+        System.out.println("Fat Percentage: " + milkDTO.getFatPercentage() + "%");
+        System.out.println("Price: ₹" + milkDTO.getPrice());
+        System.out.println("Brand: " + milkDTO.getBrand());
         System.out.println("Method of MilkComponent is called");
 
         return "milk.jsp";
