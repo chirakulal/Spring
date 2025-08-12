@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.LInkDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,7 +16,7 @@ public class LinkComponent {
     }
 
     @RequestMapping("/on")
-    public String linkMethod(LInkDTO lInkDTO){
+    public String linkMethod(LInkDTO lInkDTO, Model model){
 
         System.out.println("First Name :" + lInkDTO.getFname());
         System.out.println("Last Name :" + lInkDTO.getLname());
@@ -23,6 +24,8 @@ public class LinkComponent {
         System.out.println("Email : "+lInkDTO.getEmail());
         System.out.println("Address :"+lInkDTO.getAddress());
         System.out.println("method in link is called..");
-        return "link.jsp";
+
+        model.addAttribute("dto",lInkDTO);
+        return "LinkResult";
     }
 }

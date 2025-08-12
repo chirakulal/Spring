@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.CurryDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,7 +16,7 @@ public class CurryComponent {
     }
     @RequestMapping("/curry")
 
-    public String curryMethod(CurryDTO curryDTO) {
+    public String curryMethod(CurryDTO curryDTO, Model model) {
 
         System.out.println("Curry Name: " + curryDTO.getName());
         System.out.println("Spice Level: " + curryDTO.getSpiceLevel());
@@ -24,7 +25,8 @@ public class CurryComponent {
         System.out.println("Quantity (ml): " + curryDTO.getQuantity());
         System.out.println("Method of CurryComponent is called");
 
-        return "curry.jsp";
+        model.addAttribute("dto",curryDTO);
+        return "CurryResult";
     }
 
 }

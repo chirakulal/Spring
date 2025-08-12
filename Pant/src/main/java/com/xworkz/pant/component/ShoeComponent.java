@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.ShoeDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,7 +16,7 @@ public class ShoeComponent {
     }
 
     @RequestMapping("/shoe")
-    public String shoeMethod(ShoeDTO shoeDTO) {
+    public String shoeMethod(ShoeDTO shoeDTO, Model model) {
 
         System.out.println("Shoe Size: " + shoeDTO.getSize());
         System.out.println("Material: " + shoeDTO.getMaterial());
@@ -24,6 +25,7 @@ public class ShoeComponent {
         System.out.println("Brand: " + shoeDTO.getBrand());
         System.out.println("Method of ShoeComponent is called");
 
-        return "shoe.jsp";
+        model.addAttribute("dto",shoeDTO);
+        return "ShoeResult";
     }
 }

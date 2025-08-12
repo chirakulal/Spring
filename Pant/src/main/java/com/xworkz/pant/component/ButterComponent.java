@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.ButterDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,7 +15,7 @@ public class ButterComponent {
         System.out.println("No-argu const of ButterComponent");
     }
     @RequestMapping("/butter")
-    public String butterMethod(ButterDTO butterDTO){
+    public String butterMethod(ButterDTO butterDTO, Model model){
 
         System.out.println("Butter type: "+butterDTO.getType());
         System.out.println("Butter fatContent: "+butterDTO.getFatContent());
@@ -23,6 +24,8 @@ public class ButterComponent {
         System.out.println("Butter brand: "+butterDTO.getBrand());
 
         System.out.println("method of butterComponent is called");
-        return "butter.jsp";
+
+        model.addAttribute("dto",butterDTO);
+        return "ButterResult";
     }
 }

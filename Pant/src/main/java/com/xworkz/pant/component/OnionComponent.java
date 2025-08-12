@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.OnionDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,7 +15,7 @@ public class OnionComponent {
         System.out.println("No-argu const of OnionComponent");
     }
     @RequestMapping("/onion")
-    public String onionMethod(OnionDTO onionDTO) {
+    public String onionMethod(OnionDTO onionDTO, Model model) {
 
         System.out.println("Onion Type: " + onionDTO.getType());
         System.out.println("Color: " + onionDTO.getColor());
@@ -23,7 +24,8 @@ public class OnionComponent {
         System.out.println("Imported: " + onionDTO.isImported());
         System.out.println("Method of OnionComponent is called");
 
-        return "onion.jsp";
+        model.addAttribute("dto",onionDTO);
+        return "OnionResult";
     }
 
 }

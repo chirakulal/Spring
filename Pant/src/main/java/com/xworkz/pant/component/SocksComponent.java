@@ -3,6 +3,7 @@ package com.xworkz.pant.component;
 import com.xworkz.pant.dto.SockesDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,7 +14,7 @@ public class SocksComponent {
         System.out.println("No-argu const of SocksComponent");
     }
     @RequestMapping("/socks")
-    public String socksMethod(SockesDTO sockesDTO) {
+    public String socksMethod(SockesDTO sockesDTO, Model model) {
 
         System.out.println("Socks Size: " + sockesDTO.getSize());
         System.out.println("Material: " + sockesDTO.getMaterial());
@@ -22,6 +23,7 @@ public class SocksComponent {
         System.out.println("Brand: " + sockesDTO.getBrand());
         System.out.println("Method of SocksComponent is called");
 
-        return "socks.jsp";
+        model.addAttribute("dto",sockesDTO);
+        return "SocksResult";
     }
 }
