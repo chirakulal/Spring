@@ -14,4 +14,6 @@ public interface AuthenticationRepository {
     CustomerEntity getByEmail(String email);
 
     boolean update(CustomerEntity customerEntity);
+
+    void updateCustomer(CustomerEntity customerEntity);
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -42,4 +43,13 @@ public class CustomerEntity {
 
     @Column(name = "gender")
     private String gender;
+
+    @Column(name = "failedAttempt")
+    private int failedAttempt =0;
+
+    @Column(name = "accountLocked")
+    private int accountLocked =0;
+
+    @Column(name = "lock_time")
+    private LocalDateTime lockTime;
 }

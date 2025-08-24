@@ -75,6 +75,29 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
     }
 
     @Override
+    public void updateCustomer(CustomerEntity customerEntity) {
+        EntityManager entityManager =null;
+        EntityTransaction entityTransaction=null;
+
+        try{
+            entityManager =entityManagerFactory.createEntityManager();
+            entityTransaction=entityManager.getTransaction();
+
+            entityTransaction.begin();
+            entityManager.merge(customerEntity);
+            entityTransaction.commit();
+
+        }catch (Exception e){
+            if(entityTransaction.isActive()){
+                entityTransaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
     public boolean updatePassword(String email, String password) {
         EntityManager entityManager =null;
         EntityTransaction entityTransaction =null;
@@ -89,6 +112,9 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
             query.setParameter("emailBY",email);
            customerEntity =(CustomerEntity) query.getSingleResult();
            customerEntity.setPassword(password);
+           customerEntity.setFailedAttempt(0);
+           customerEntity.setAccountLocked(0);
+            customerEntity.setLockTime(null);
 
            entityTransaction.commit();
            return true;

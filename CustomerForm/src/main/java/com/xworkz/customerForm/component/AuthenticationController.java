@@ -57,6 +57,11 @@ public class AuthenticationController {
         return modelAndView;
     }
 
+
+
+
+
+
     @RequestMapping("signin")
     public ModelAndView signIn(@RequestParam  String name, @RequestParam String password, ModelAndView modelAndView,HttpSession httpSession){
 
@@ -68,11 +73,23 @@ public class AuthenticationController {
 
       CustomerEntity customerEntity =  authenticationService.signIn(name,password);
         if(customerEntity==null){
+
+
             System.out.println("Match not found");
             modelAndView.addObject("error","User not found");
             modelAndView.setViewName("SignIn");
             return modelAndView;
         }
+
+        if (customerEntity.getAccountLocked() == 1) {
+            System.out.println("Account is locked for: " + name);
+            modelAndView.addObject("error",
+                    "Your account has been locked due to 3 failed attempts. Please wait 24 hours .");
+            modelAndView.setViewName("SignIn");
+            return modelAndView;
+        }
+
+
         httpSession.setAttribute("email",customerEntity.getEmail());
         System.out.println("Match found");
         modelAndView.addObject("success","SignIn successfully");
@@ -80,6 +97,10 @@ public class AuthenticationController {
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+
+
+
 
     @RequestMapping("resetpassword")
     public ModelAndView updatePassword(@RequestParam String email,@RequestParam String password,@RequestParam String confirmPassword ,ModelAndView modelAndView) {
@@ -94,20 +115,23 @@ public class AuthenticationController {
             return modelAndView;
         }
 
-      boolean result=  authenticationService.updatePassword(email,password);
+        String result = authenticationService.updatePassword(email, password);
 
-        if(!result){
-            System.out.println("update is unsuccessfully");
-            modelAndView.addObject("error","Cannot be updated");
+        if ("SUCCESS".equals(result)) {
+            modelAndView.addObject("success", "Password updated successfully.");
+            modelAndView.setViewName("SignIn");
+        } else {
+            modelAndView.addObject("error", result);
             modelAndView.setViewName("Forgetpassword");
-        return modelAndView;
-    }
-        System.out.println("Updated Successfully");
-        modelAndView.setViewName("SignIn");
+        }
 
         return modelAndView;
 
     }
+
+
+
+
 
     @RequestMapping("userdetails")
     public ModelAndView getUserDetails(ModelAndView modelAndView, HttpSession httpSession){
@@ -126,6 +150,10 @@ public class AuthenticationController {
 
         return modelAndView;
     }
+
+
+
+
 
     @RequestMapping("updateProfile")
     public ModelAndView updateProfile(@Valid CustomerDTO customerDTO,BindingResult bindingResult,ModelAndView modelAndView){

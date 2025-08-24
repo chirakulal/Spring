@@ -9,9 +9,11 @@ public interface AuthenticationService {
 
     CustomerEntity signIn(String name, String password);
 
-    boolean updatePassword(String email,String password);
+    String updatePassword(String email,String password);
 
     CustomerEntity getByEmail(String email);
 
     boolean update(CustomerDTO customerDTO);
+
+    void updateCustomer(CustomerEntity customerEntity);
 }

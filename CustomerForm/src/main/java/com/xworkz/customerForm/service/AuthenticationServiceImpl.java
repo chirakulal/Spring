@@ -13,7 +13,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 @Service
@@ -46,21 +46,78 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public CustomerEntity signIn(String name,String password) {
 
      CustomerEntity customerEntity=   authenticationRepo.sigIn(name);
+        if (customerEntity == null) {
+            return null;
+        }
+        if (customerEntity.getAccountLocked() == 1) {
+            LocalDateTime lockTime = customerEntity.getLockTime();
+            if (lockTime != null) {
+                if (lockTime.plusHours(24).isBefore(LocalDateTime.now())) {
+
+                    customerEntity.setAccountLocked(0);
+                    customerEntity.setFailedAttempt(0);
+                    customerEntity.setLockTime(null);
+                    authenticationRepo.updateCustomer(customerEntity);
+                    System.out.println("Account auto-unlocked after 24h for: " + name);
+                } else {
+                    System.out.println("Account still locked for: " + name);
+                    return customerEntity;
+                }
+            } else {
+                return customerEntity;
+            }
+        }
+
 
      if( bCryptPasswordEncoder.matches(password,customerEntity.getPassword()) && customerEntity.getName().equals(name)){
          System.out.println("Password and name are matched");
-         return customerEntity;
-     }
+         customerEntity.setFailedAttempt(0);
 
-     return customerEntity;
-    }
+         authenticationRepo.updateCustomer(customerEntity);
+         return customerEntity;
+     }else{
+         int attempts = customerEntity.getFailedAttempt()+1;
+         customerEntity.setFailedAttempt(attempts);
+
+         if(attempts>=3){
+             customerEntity.setAccountLocked(1);
+             customerEntity.setLockTime(LocalDateTime.now());
+             System.out.println("Account locked due to 3 failed attempts for: " + name);
+         } else {
+             System.out.println("Invalid password attempt " + attempts + " for: " + name);
+         }
+
+         authenticationRepo.updateCustomer(customerEntity);
+         return null;
+         }
+     }
 
 
     @Override
-    public boolean updatePassword(String email, String password) {
-        return authenticationRepo.updatePassword(email,bCryptPasswordEncoder.encode(password));
+    public void updateCustomer(CustomerEntity customerEntity) {
+       authenticationRepo.updateCustomer(customerEntity);
     }
 
+    @Override
+    public String updatePassword(String email, String password) {
+
+       CustomerEntity customerEntity = authenticationRepo.getByEmail(email);
+
+        if (customerEntity == null) {
+            return "No account found with this email.";
+        }
+
+        if (customerEntity.getAccountLocked() == 1) {
+            LocalDateTime lockTime = customerEntity.getLockTime();
+            if (lockTime != null && lockTime.plusHours(24).isAfter(LocalDateTime.now())) {
+                return "Your account is locked. Try again after 24 hours.";
+            }
+        }
+
+        boolean updated = authenticationRepo.updatePassword(email, bCryptPasswordEncoder.encode(password));
+        return updated ? "SUCCESS" : "Password update failed. Please try again.";
+
+    }
     private void sendEmail(String email){
         final String username = "chirashreelk@gmail.com";
         final String password = "dsjh qqwc gkos ebto";
