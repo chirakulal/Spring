@@ -185,6 +185,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         }
     }
 
+
     @Override
     public CustomerEntity getByEmail(String email) {
 
