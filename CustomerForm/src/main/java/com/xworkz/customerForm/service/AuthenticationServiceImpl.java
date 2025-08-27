@@ -113,6 +113,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
      }
 
 
+
+
     @Override
     public void updateCustomer(CustomerEntity customerEntity) {
        authenticationRepo.updateCustomer(customerEntity);
@@ -138,6 +140,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         return updated ? "SUCCESS" : "Password update failed. Please try again.";
 
     }
+
+
     private void sendEmail(String email){
         final String username = "chirashreelk@gmail.com";
         final String password = "dsjh qqwc gkos ebto";
@@ -164,8 +168,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                     InternetAddress.parse(email)
             );
             message.setSubject("Registration Successfull");
-            message.setText("Dear ,"
-                    + "Welcome to xworkz...");
+            message.setText(  "Dear User,\n\n"
+                    + "Congratulations! Your registration has been completed successfully.\n"
+                    + "We are excited to have you as part of the Xworkz community.\n\n"
+                    + "You can now log in to your account and explore all the features available to you.\n\n"
+                    + "If you have any questions or need support, feel free to reach out to us.\n\n"
+                    + "Best Regards,\n"
+                    + "Team Xworkz");
 
             Transport.send(message);
 
