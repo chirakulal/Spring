@@ -68,6 +68,26 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             }
         }
 
+        if(customerEntity.getAccountLocked()==1){
+            LocalDateTime localDateTime = customerEntity.getLockTime();
+
+            if(localDateTime!=null) {
+                if (localDateTime.plusHours(24).isBefore(LocalDateTime.now())) {
+                    customerEntity.setAccountLocked(0);
+                    customerEntity.setFailedAttempt(0);
+                    customerEntity.setLockTime(null);
+                    authenticationRepo.updateCustomer(customerEntity);
+
+                    System.out.println("Account auto-unlocked after 24h for: " + name);
+                } else {
+                    System.out.println("Account is still locked: " + name);
+                    return customerEntity;
+                }
+            }else {
+                return customerEntity;
+            }
+        }
+
 
      if( bCryptPasswordEncoder.matches(password,customerEntity.getPassword()) && customerEntity.getName().equals(name)){
          System.out.println("Password and name are matched");
