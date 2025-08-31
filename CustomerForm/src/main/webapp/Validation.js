@@ -90,22 +90,4 @@ error.textContent ="";
 }
 }
 
-  // Toggle New Password
-    const togglePassword = document.getElementById("togglePassword");
-    const password = document.getElementById("password");
-    togglePassword.addEventListener("click", function () {
-        const type = password.getAttribute("type") === "password" ? "text" : "password";
-        password.setAttribute("type", type);
-        this.classList.toggle("bi-eye");
-        this.classList.toggle("bi-eye-slash");
-    });
 
-    // Toggle Confirm Password
-    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
-    const confirmPassword = document.getElementById("confirmPassword");
-    toggleConfirmPassword.addEventListener("click", function () {
-        const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
-        confirmPassword.setAttribute("type", type);
-        this.classList.toggle("bi-eye");
-        this.classList.toggle("bi-eye-slash");
-    });

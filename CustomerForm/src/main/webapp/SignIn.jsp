@@ -43,9 +43,16 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" oninput="validatePassword()" required>
+
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="showPassword">
+                                <label class="form-check-label" for="showPassword">Show Password</label>
+                            </div>
+
                             <small id="passwordError" class="text-danger"></small>
-                            <a href="Forgetpassword.jsp">Forgotpassword?</a>
+                            <a href="Forgetpassword.jsp">Forgot password?</a>
                         </div>
+
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
@@ -64,6 +71,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const showPassword = document.getElementById("showPassword");
+        const pwd = document.getElementById("password");
+
+        if (showPassword) {
+            showPassword.addEventListener("change", function() {
+                pwd.type = this.checked ? "text" : "password";
+            });
+        }
+    });
+</script>
+
 <script src="Validation.js"></script>
 </body>
 </html>
+
