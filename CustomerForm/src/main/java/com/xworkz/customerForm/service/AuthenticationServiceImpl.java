@@ -3,6 +3,9 @@ package com.xworkz.customerForm.service;
 import com.xworkz.customerForm.dto.CustomerDTO;
 import com.xworkz.customerForm.entity.CustomerEntity;
 import com.xworkz.customerForm.repository.AuthenticationRepoImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,13 +17,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-
+import java.util.Random;
+@Slf4j
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
 
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
     @Autowired
     AuthenticationRepoImpl authenticationRepo;
+
+    private final Map<String, String> otpStorage = new HashMap<>();
 
    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -58,9 +67,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                     customerEntity.setFailedAttempt(0);
                     customerEntity.setLockTime(null);
                     authenticationRepo.updateCustomer(customerEntity);
-                    System.out.println("Account auto-unlocked after 24h for: " + name);
+                    log.info("Account auto-unlocked after 24h for: " + name);
                 } else {
-                    System.out.println("Account still locked for: " + name);
+                    log.info("Account still locked for: " + name);
                     return customerEntity;
                 }
             } else {
@@ -78,9 +87,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                     customerEntity.setLockTime(null);
                     authenticationRepo.updateCustomer(customerEntity);
 
-                    System.out.println("Account auto-unlocked after 24h for: " + name);
+                    log.info("Account auto-unlocked after 24h for: " + name);
                 } else {
-                    System.out.println("Account is still locked: " + name);
+                    log.info("Account is still locked: " + name);
                     return customerEntity;
                 }
             }else {
@@ -90,7 +99,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
 
      if( bCryptPasswordEncoder.matches(password,customerEntity.getPassword()) && customerEntity.getName().equals(name)){
-         System.out.println("Password and name are matched");
+         log.info("Password and name are matched");
          customerEntity.setFailedAttempt(0);
 
          authenticationRepo.updateCustomer(customerEntity);
@@ -102,9 +111,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
          if(attempts>=3){
              customerEntity.setAccountLocked(1);
              customerEntity.setLockTime(LocalDateTime.now());
-             System.out.println("Account locked due to 3 failed attempts for: " + name);
+             log.info("Account locked due to 3 failed attempts for: " + name);
          } else {
-             System.out.println("Invalid password attempt " + attempts + " for: " + name);
+             log.info("Invalid password attempt " + attempts + " for: " + name);
          }
 
          authenticationRepo.updateCustomer(customerEntity);
@@ -129,12 +138,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
             return "No account found with this email.";
         }
 
-        if (customerEntity.getAccountLocked() == 1) {
-            LocalDateTime lockTime = customerEntity.getLockTime();
-            if (lockTime != null && lockTime.plusHours(24).isAfter(LocalDateTime.now())) {
-                return "Your account is locked. Try again after 24 hours.";
-            }
-        }
+
 
         boolean updated = authenticationRepo.updatePassword(email, bCryptPasswordEncoder.encode(password));
         return updated ? "SUCCESS" : "Password update failed. Please try again.";
@@ -191,10 +195,18 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Override
     public CustomerEntity getByEmail(String email) {
 
-
-        return authenticationRepo.getByEmail(email);
+        CustomerEntity customerEntity = authenticationRepo.getByEmail(email);
+        if (customerEntity.getEmail() == null) {
+            return null;
+        }
+        if (customerEntity.getEmail().equals(email)) {
+            log.info("email is matched");
+            return customerEntity;
+        } else  {
+            log.info("email does not exist");
+            return null;
+        }
     }
-
     @Override
     public boolean update(CustomerDTO customerDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
@@ -204,8 +216,68 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         customerEntity.setAddress(customerDTO.getAddress());
         customerEntity.setPhoneNumber(customerDTO.getPhoneNumber());
         customerEntity.setGender(customerDTO.getGender());
-        System.out.println(customerEntity);
+        log.info("Customer DTO: {}", customerDTO);
+
         return  authenticationRepo.update(customerEntity);
     }
+
+    @Override
+    public void sendOtp(String email) {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            builder.append(random.nextInt(10));
+        }
+        String generatedOtp = builder.toString();
+
+        // Save OTP against the email
+        otpStorage.put(email, generatedOtp);
+
+        // Send email
+        getEmail(email, "OTP Sent",
+                "Dear User,\nYour OTP is: " + generatedOtp + "\nIt will expire in 5 minutes.");
+    }
+
+    @Override
+    public boolean verifyOtp(String email, String otp) {
+        // Get OTP stored for this email
+        String storedOtp = otpStorage.get(email);
+        return otp.equals(storedOtp);
+    }
+
+    private void getEmail(String email, String subject, String body) {
+        final String username = "chirashreelk@gmail.com";
+        final String password = "wvxi xvhj jfcr bgkh";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("chirashreelk@gmail.com"));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(email)
+            );
+            message.setSubject(subject);
+            message.setText(body);
+
+            Transport.send(message);
+            System.out.println(" OTP sent to " + email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

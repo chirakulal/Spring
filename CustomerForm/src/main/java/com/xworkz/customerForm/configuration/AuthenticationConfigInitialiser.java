@@ -1,11 +1,13 @@
 package com.xworkz.customerForm.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+@Slf4j
 public class AuthenticationConfigInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     public AuthenticationConfigInitialiser(){
-        System.out.println("Spring intialiser is created....");
+        log.info("Spring intialiser is created....");
     }
 
     @Override

@@ -16,4 +16,8 @@ public interface AuthenticationService {
     boolean update(CustomerDTO customerDTO);
 
     void updateCustomer(CustomerEntity customerEntity);
+
+    boolean verifyOtp(String email, String otp);
+
+    void sendOtp(String email);
 }

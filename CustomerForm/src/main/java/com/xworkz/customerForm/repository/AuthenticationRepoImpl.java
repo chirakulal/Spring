@@ -1,15 +1,17 @@
 package com.xworkz.customerForm.repository;
 
 import com.xworkz.customerForm.entity.CustomerEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 
 @Repository
+@Slf4j
 public class AuthenticationRepoImpl implements AuthenticationRepository{
 
     public AuthenticationRepoImpl(){
-        System.out.println("Repo.........");
+        log.info("Repo.........");
     }
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("authentication");
@@ -17,7 +19,7 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
     @Override
     public boolean save(CustomerEntity customerEntity) {
 
-        System.out.println(customerEntity);
+        log.info("CustomerEntity, {}",customerEntity);
 
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
@@ -183,7 +185,7 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
             customerEntity1.setAddress(customerEntity.getAddress());
             customerEntity1.setGender(customerEntity.getGender());
 
-            System.out.println(customerEntity1);
+            log.info("CustomerEntity, {}",customerEntity1);
             entityManager.merge(customerEntity1);
             entityTransaction.commit();
 
