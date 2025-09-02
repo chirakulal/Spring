@@ -58,6 +58,7 @@
                         </div>
                         <div class="text-center mt-3">
                             <p>Don't have an account? <a href="SignUp.jsp">Sign Up</a></p>
+                            <p><a href="login.jsp" class="btn btn-outline-secondary btn-sm">Login with OTP</a></p>
                         </div>
                     </form>
                     <span style="color:green">${success}</span>
