@@ -18,9 +18,9 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"
-                 class="d-inline-block align-text-top">
-            Bootstrap
+<!--            <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"-->
+<!--                 class="d-inline-block align-text-top">-->
+<!--            Bootstrap-->
         </a>
         <ul class="nav justify-content-end">
             <li class="nav-item">
@@ -40,17 +40,17 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name" oninput="validateName()" value="${dto.name}" required>
+                    <input type="text" class="form-control" id="name" name="name" oninput="validateName()" onchange="checkName()" value="${dto.name}" required>
                     <div id="nameError" class="form-text text-danger"></div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" oninput="validateEmail()" value="${dto.email}" required>
+                    <input type="text" class="form-control" id="email" name="email" oninput="validateEmail()" onchange="checkEmail()" value="${dto.email}" required>
                     <div id="emailError" class="form-text text-danger"></div>
                 </div>
                 <div class="mb-3">
                     <label for="phoneNumber" class="form-label">PhoneNumber</label>
-                    <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" oninput="validatePhoneNumber()" value="${dto.phoneNumber}" required>
+                    <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" oninput="validatePhoneNumber()" onchange="checkPhoneNumber()" value="${dto.phoneNumber}" required>
                     <small id="phoneNumberError" class="text-danger"></small>
                 </div>
                 <div class="mb-3">

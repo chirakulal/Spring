@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 @Table(name = "customer_details")
 @NamedQuery(name = "getPasswordAndName",query = "Select entity from CustomerEntity entity where entity.name = :nameBy")
 @NamedQuery(name = "getAllByEmail", query = "Select entity from CustomerEntity entity where entity.email= :emailBY")
+@NamedQuery(name ="countEmail",query ="select count(e.email) from CustomerEntity e where email=:email" )
+@NamedQuery(name ="countPhoneNumber",query ="select count(e.phoneNumber) from CustomerEntity e where phoneNumber=:phoneNumber" )
+@NamedQuery(name ="countName",query ="select count(e.name) from CustomerEntity e where name=:name" )
 public class CustomerEntity {
 
 

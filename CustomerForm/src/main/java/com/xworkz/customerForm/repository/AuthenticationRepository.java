@@ -16,4 +16,10 @@ public interface AuthenticationRepository {
     boolean update(CustomerEntity customerEntity);
 
     void updateCustomer(CustomerEntity customerEntity);
+
+    Long emailCount(String email);
+
+    Long countPhoneNumber(long phoneNumber);
+
+    Long countName(String name);
 }

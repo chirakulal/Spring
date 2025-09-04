@@ -279,5 +279,19 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         }
     }
 
+    @Override
+    public int emailCount(String email) {
+        return Math.toIntExact(authenticationRepo.emailCount(email));
+    }
+
+    @Override
+    public int phoneNumberCount(long phoneNumber) {
+        return Math.toIntExact(authenticationRepo.countPhoneNumber(phoneNumber));
+    }
+
+    @Override
+    public int nameCount(String name) {
+        return Math.toIntExact(authenticationRepo.countName(name));
+    }
 }
 

@@ -204,4 +204,81 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
 
         return false;
     }
+
+    @Override
+    public Long emailCount(String email) {
+        EntityManager manager=null;
+        EntityTransaction entityTransaction=null;
+        long count =0;
+        try{
+            manager= entityManagerFactory.createEntityManager();
+            entityTransaction = manager.getTransaction();
+
+            entityTransaction.begin();
+           Query query= manager.createNamedQuery("countEmail");
+           query.setParameter("email",email);
+           count = (long) query.getSingleResult();
+           entityTransaction.commit();
+        }catch (Exception e){
+            if(entityTransaction==null&&entityTransaction.isActive()){
+                entityTransaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            manager.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countPhoneNumber(long phoneNumber) {
+
+        EntityManager manager=null;
+        EntityTransaction entityTransaction=null;
+        long count =0;
+        try{
+            manager= entityManagerFactory.createEntityManager();
+            entityTransaction = manager.getTransaction();
+
+            entityTransaction.begin();
+            Query query= manager.createNamedQuery("countPhoneNumber");
+            query.setParameter("phoneNumber",phoneNumber);
+            count = (long) query.getSingleResult();
+            entityTransaction.commit();
+        }catch (Exception e){
+            if(entityTransaction==null&&entityTransaction.isActive()){
+                entityTransaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            manager.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countName(String name) {
+
+        EntityManager manager=null;
+        EntityTransaction entityTransaction=null;
+        long count =0;
+        try{
+            manager= entityManagerFactory.createEntityManager();
+            entityTransaction = manager.getTransaction();
+
+            entityTransaction.begin();
+            Query query= manager.createNamedQuery("countName");
+            query.setParameter("name",name);
+            count = (long) query.getSingleResult();
+            entityTransaction.commit();
+        }catch (Exception e){
+            if(entityTransaction==null&&entityTransaction.isActive()){
+                entityTransaction.rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            manager.close();
+        }
+        return count;
+    }
 }

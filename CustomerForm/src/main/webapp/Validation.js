@@ -11,6 +11,19 @@ error.textContent =" "
 
 }
 
+  function checkName() {
+        let name = document.getElementById("name").value;
+        let error = document.getElementById("nameError");
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:8080/CustomerForm/checkName/" + name);
+        xhttp.send();
+
+        xhttp.onload = function () {
+            error.innerHTML = this.responseText;
+        }
+    }
+
 
 function validateEmail(){
 
@@ -26,6 +39,22 @@ error.textContent = "";
 }
 }
 
+function checkEmail(){
+let email = document.getElementById("email").value;
+let emailError = document.getElementById("emailError");
+
+const xhttp = new XMLHttpRequest();
+
+xhttp.open("GET","http://localhost:8080/CustomerForm/checkEmail/"+email);
+xhttp.send();
+
+xhttp.onload=function(){
+emailError.innerHTML=this.responseText;
+}
+
+
+}
+
 function validatePassword(){
 
 let password = document.getElementById("password").value
@@ -39,7 +68,6 @@ error.textContent = "Password must have at least 1 capital, 1 number, and may in
 error.textContent ="";
 }
 }
-
 function validateConfirmPassword(){
 let confirmPassword = document.getElementById("confirmPassword").value
 let password = document.getElementById("password").value
@@ -78,16 +106,26 @@ error.textContent = "";
 
 }
 
-function validatePhoneNumber(){
+  function validatePhoneNumber() {
+        let number = document.getElementById("phoneNumber").value;
+        let error = document.getElementById("phoneNumberError");
 
-let number = document.getElementById("phoneNumber").value
-let error = document.getElementById("phoneNumberError")
+        if (number.length != 10) {
+            error.textContent = "Phone Number should be 10 digits";
+        } else {
+            error.textContent = "";
+        }
+    }
 
-if(number.length!=10){
-error.textContent ="Phone Number should be 10 digits"
-}else{
-error.textContent ="";
-}
-}
+    function checkPhoneNumber() {
+        let phoneNumber = document.getElementById("phoneNumber").value;
+        let error = document.getElementById("phoneNumberError");
 
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:8080/CustomerForm/checkPhoneNumber/" + phoneNumber);
+        xhttp.send();
 
+        xhttp.onload = function () {
+            error.innerHTML = this.responseText;
+        }
+    }

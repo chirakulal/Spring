@@ -20,4 +20,11 @@ public interface AuthenticationService {
     boolean verifyOtp(String email, String otp);
 
     void sendOtp(String email);
+
+    int emailCount(String email);
+
+    int phoneNumberCount(long phoneNumber);
+
+    int nameCount(String name);
+
 }
