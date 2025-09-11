@@ -55,4 +55,7 @@ public class CustomerEntity {
 
     @Column(name = "lock_time")
     private LocalDateTime lockTime;
+
+    @Column(name = "image")
+    private String imagePath;
 }

@@ -10,10 +10,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -29,9 +34,18 @@ public class AuthenticationController {
     }
 
     @RequestMapping("signup")
-    public ModelAndView saveAndValidate(@Valid CustomerDTO customerDTO, BindingResult bindingResult, ModelAndView modelAndView){
+    public ModelAndView saveAndValidate(@RequestParam("image") MultipartFile multipartFile ,@Valid CustomerDTO customerDTO, BindingResult bindingResult, ModelAndView modelAndView) throws IOException {
+        byte[] bytes=multipartFile .getBytes();
 
-        log.info("Customer DTO: {}", customerDTO);
+        Path path= Paths.get("D:\\chiraimage\\"+customerDTO.getName()+System.currentTimeMillis()+".jpg");
+
+        Files.write(path,bytes);
+        String image=path.getFileName().toString();
+
+        customerDTO.setImagePath(path.toString());
+
+        System.out.println("image name"+image);
+        log.info("Customer DTO: {}", customerDTO.getImagePath());
 
         if(!customerDTO.getPassword().equals(customerDTO.getConfirmPassword())){
             modelAndView.addObject("error","Password and Confirm password does not match");

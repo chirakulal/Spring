@@ -44,6 +44,8 @@ public class CustomerDTO {
     @NotNull(message = "gender should not be empty")
     private String gender;
 
+    private String imagePath;
+
 
 
 

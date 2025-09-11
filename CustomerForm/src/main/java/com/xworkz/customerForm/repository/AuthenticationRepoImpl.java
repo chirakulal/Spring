@@ -2,6 +2,7 @@ package com.xworkz.customerForm.repository;
 
 import com.xworkz.customerForm.entity.CustomerEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ public class AuthenticationRepoImpl implements AuthenticationRepository{
         log.info("Repo.........");
     }
 
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("authentication");
+    @Autowired
+    EntityManagerFactory entityManagerFactory ;
 
     @Override
     public boolean save(CustomerEntity customerEntity) {

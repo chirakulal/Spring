@@ -27,4 +27,6 @@ public interface AuthenticationService {
 
     int nameCount(String name);
 
+//    void setProfile(String imagepath);
+
 }

@@ -33,8 +33,8 @@
 <div class="container mt-4">
     <h2 class="mb-3">Customer Registration Form</h2>
     <span style="color:red">${error}</span>
-    <form action="signup" method="post">
-        <div class="row">
+    <form action="signup" method="post" enctype="multipart/form-data">
+    <div class="row">
 
             <!-- Left Column -->
             <div class="col-md-6">
@@ -63,6 +63,7 @@
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" oninput="validateConfirmPassword()" value="${dto.confirmPassword}" required>
                     <div id="confirmPasswordError" class="form-text text-danger"></div>
                 </div>
+
             </div>
 
             <!-- Right Column -->
@@ -87,6 +88,12 @@
                     </select>
                     <small class="text-danger" id="genderError"></small>
                 </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Profile Picture</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    <small id="profilePictureError" class="text-danger"></small>
+                </div>
+
 
             </div>
         </div>

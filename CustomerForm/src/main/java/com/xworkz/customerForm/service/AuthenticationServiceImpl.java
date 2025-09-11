@@ -46,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         customerEntity.setAge(customerDTO.getAge());
         customerEntity.setAddress(customerDTO.getAddress());
         customerEntity.setGender(customerDTO.getGender());
-
+        customerEntity.setImagePath(customerDTO.getImagePath());
 
         return authenticationRepo.save(customerEntity);
     }
@@ -148,7 +148,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     private void sendEmail(String email){
         final String username = "chirashreelk@gmail.com";
-        final String password = "dsjh qqwc gkos ebto";
+        final String password = "wvxi xvhj jfcr bgkh";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -293,5 +293,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public int nameCount(String name) {
         return Math.toIntExact(authenticationRepo.countName(name));
     }
+
+//    @Override
+//    public void setProfile(String imagepath) {
+//         CustomerEntity customerEntity = new CustomerEntity();
+//         customerEntity.setImage(imagepath);
+//        authenticationRepo.save(customerEntity);
+//    }
 }
 
