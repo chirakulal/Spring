@@ -193,15 +193,24 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
 
     @Override
-    public CustomerEntity getByEmail(String email) {
+    public CustomerDTO getByEmail(String email) {
 
         CustomerEntity customerEntity = authenticationRepo.getByEmail(email);
+        CustomerDTO customerDTO =new CustomerDTO();
+        customerDTO.setEmail(customerEntity.getEmail());
+        customerDTO.setGender(customerEntity.getGender());
+        customerDTO.setAge(customerEntity.getAge());
+        customerDTO.setAddress(customerEntity.getAddress());
+        customerDTO.setPassword(customerEntity.getPassword());
+        customerDTO.setName(customerEntity.getName());
+        customerDTO.setPhoneNumber(customerEntity.getPhoneNumber());
+        customerDTO.setImagePath(customerEntity.getImagePath());
         if (customerEntity.getEmail() == null) {
             return null;
         }
         if (customerEntity.getEmail().equals(email)) {
             log.info("email is matched");
-            return customerEntity;
+            return customerDTO;
         } else  {
             log.info("email does not exist");
             return null;

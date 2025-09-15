@@ -152,10 +152,10 @@ public class AuthenticationController {
     public ModelAndView getUserDetails(ModelAndView modelAndView, HttpSession httpSession){
 
       String sessionEmail =(String)  httpSession.getAttribute("email");
-      CustomerEntity customerEntity =     authenticationService.getByEmail(sessionEmail);
-
-      if(customerEntity!=null){
-          modelAndView.addObject("dto",customerEntity);
+      CustomerDTO customerDTO =     authenticationService.getByEmail(sessionEmail);
+      log.info("{}",customerDTO.getImagePath());
+      if(customerDTO!=null){
+          modelAndView.addObject("dto",customerDTO);
           modelAndView.setViewName("Update");
           return modelAndView;
       }
@@ -172,7 +172,7 @@ public class AuthenticationController {
 
 
     @RequestMapping("updateProfile")
-    public ModelAndView updateProfile(@Valid CustomerDTO customerDTO,BindingResult bindingResult,ModelAndView modelAndView){
+    public ModelAndView updateProfile(@RequestParam("image") MultipartFile multipartFile,@Valid CustomerDTO customerDTO,BindingResult bindingResult,ModelAndView modelAndView) throws IOException {
 //        if(bindingResult.hasErrors()){
 //            List<ObjectError> errors = bindingResult.getAllErrors();
 //            for (ObjectError objectError : errors){
@@ -183,6 +183,17 @@ public class AuthenticationController {
 //                return modelAndView;
 //            }
   //      }
+        byte[] bytes=multipartFile .getBytes();
+
+        Path path= Paths.get("D:\\chiraimage\\"+customerDTO.getName()+System.currentTimeMillis()+".jpg");
+
+        Files.write(path,bytes);
+        String image=path.getFileName().toString();
+
+        customerDTO.setImagePath(path.toString());
+
+        System.out.println("image name"+image);
+        log.info("Customer DTO: {}", customerDTO.getImagePath());
         log.info("Customer DTO: {}", customerDTO);
 
         boolean result = authenticationService.update(customerDTO);
@@ -204,9 +215,9 @@ public class AuthenticationController {
     // Step 1: Verify Email and Send OTP
     @RequestMapping("verifyUserEmail")
     public ModelAndView verifyEmail(String email, ModelAndView modelAndView, HttpSession session) {
-        CustomerEntity customerEntity = authenticationService.getByEmail(email);
+        CustomerDTO customerDTO= authenticationService.getByEmail(email);
 
-        if (customerEntity == null) {
+        if (customerDTO == null) {
             // Email not found → stay on login page
             modelAndView.setViewName("login");
             modelAndView.addObject("error", "Email does not exist!");
@@ -239,9 +250,9 @@ public class AuthenticationController {
             view.setViewName("verifyOtp");
         } else {
             // OTP verified successfully
-            CustomerEntity customerEntity = authenticationService.getByEmail(email);
-            session.setAttribute("loginName", customerEntity.getName());
-            session.setAttribute("loginEmail", customerEntity.getEmail());
+            CustomerDTO customerDTO= authenticationService.getByEmail(email);
+            session.setAttribute("loginName", customerDTO.getName());
+            session.setAttribute("loginEmail", customerDTO.getEmail());
 
             // You can either redirect immediately or show a success message before redirect
             view.addObject("message", "OTP Verified Successfully. Redirecting...");

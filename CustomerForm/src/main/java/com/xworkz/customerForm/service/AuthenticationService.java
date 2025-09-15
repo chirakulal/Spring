@@ -11,7 +11,7 @@ public interface AuthenticationService {
 
     String updatePassword(String email,String password);
 
-    CustomerEntity getByEmail(String email);
+    CustomerDTO getByEmail(String email);
 
     boolean update(CustomerDTO customerDTO);
 

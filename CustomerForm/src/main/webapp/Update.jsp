@@ -27,15 +27,19 @@
 <div class="container mt-4">
     <h2 class="mb-3">Update Profile</h2>
     <span style="color:red">${error}</span>
-    <form action="updateProfile" method="post">
+    <form action="updateProfile" method="post"  enctype="multipart/form-data">
         <div class="row">
 
             <!-- Left Column -->
             <div class="col-md-6">
+
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
                     <input type="text" class="form-control" id="name" name="name"
                            value="${dto.name}" required>
+                </div>
+                <div>
+                    <img src="download?fileName=${dto.imagePath}" width="100" height="100" >
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email (Read Only)</label>
@@ -69,6 +73,11 @@
                         <option value="Female" ${dto.gender=='Female' ? 'selected' : ''}>Female</option>
                         <option value="Other" ${dto.gender=='Other' ? 'selected' : ''}>Other</option>
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Profile Picture</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    <small id="profilePictureError" class="text-danger"></small>
                 </div>
             </div>
         </div>
