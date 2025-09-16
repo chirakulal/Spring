@@ -9,47 +9,81 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- White background styling -->
     <style>
         body {
-            background: #f8fafc; /* white/light background */
+            background: linear-gradient(135deg, #1e1e2f, #2c2c54);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .otp-card {
-            background: #ffffff;
-            color: #1e293b;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            color: #fff;
             border-radius: 1rem;
             padding: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 420px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.8s ease-in-out;
         }
+
         .otp-card h3 {
             font-weight: 700;
-            color: #2563eb; /* blue heading */
+            color: #00c6ff;
         }
+
+        .form-label {
+            font-weight: 500;
+            color: #ddd;
+        }
+
         .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 0.5rem;
         }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border-color: #00c6ff;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+        }
+
         .btn-custom {
-            background: #2563eb;
+            background: #00c6ff;
             border: none;
             border-radius: 0.5rem;
             font-weight: 600;
             color: #fff;
+            transition: all 0.3s ease;
         }
+
         .btn-custom:hover {
-            background: #1d4ed8;
+            background: #0099cc;
+            transform: scale(1.02);
+        }
+
+        .alert {
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Smooth fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
 <div class="otp-card">
-    <h3 class="text-center mb-4">Secure OTP Login</h3>
+    <h3 class="text-center mb-4"> OTP Login</h3>
 
     <!-- Email Form -->
     <form action="verifyUserEmail" method="post" class="mb-3">
@@ -60,7 +94,7 @@
         <button type="submit" class="btn btn-custom w-100">Send OTP</button>
     </form>
 
-    <!-- Show only one message at a time -->
+    <!-- Conditional messages -->
     <c:choose>
         <c:when test="${not empty error}">
             <div class="alert alert-danger text-center py-2">${error}</div>

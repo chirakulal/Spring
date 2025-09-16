@@ -4,18 +4,22 @@ import com.xworkz.customerForm.dto.CustomerDTO;
 import com.xworkz.customerForm.entity.CustomerEntity;
 import com.xworkz.customerForm.service.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,7 +46,7 @@ public class AuthenticationController {
         Files.write(path,bytes);
         String image=path.getFileName().toString();
 
-        customerDTO.setImagePath(path.toString());
+        customerDTO.setImagePath(image);
 
         System.out.println("image name"+image);
         log.info("Customer DTO: {}", customerDTO.getImagePath());
@@ -166,7 +170,16 @@ public class AuthenticationController {
         return modelAndView;
     }
 
+    @GetMapping("/download")
+    public void getImage(HttpServletResponse response , @RequestParam String fileName) throws IOException {
+        response.setContentType("image/jpg");
+        File file = new File("D:\\chiraimage\\"+fileName);
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+        IOUtils.copy(inputStream,servletOutputStream);
 
+        response.flushBuffer();
+    }
 
 
 

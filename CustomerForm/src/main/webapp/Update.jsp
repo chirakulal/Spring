@@ -1,97 +1,115 @@
-<!doctype html>
-<%@ page isELIgnored = "false" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Profile</title>
+    <title>Login with OTP</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            /* Slightly different gradient for distinction but same dark style */
+            background: linear-gradient(135deg, #1b1b2f, #242446);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .otp-card {
+            /* Glassmorphism look consistent with previous page */
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .otp-card h3 {
+            font-weight: 700;
+            /* Changed accent color slightly (cyan → light purple-blue) */
+            color: #7dd3fc;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            /* Use matching light-blue accent */
+            border-color: #7dd3fc;
+            box-shadow: 0 0 10px rgba(125, 211, 252, 0.5);
+        }
+
+        .btn-custom {
+            background: #7dd3fc;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #0f172a;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: #38bdf8;
+            transform: scale(1.02);
+        }
+
+        .alert {
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Smooth fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">MyApp</a>
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="SignOut.jsp">Sign Out</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-<div class="container mt-4">
-    <h2 class="mb-3">Update Profile</h2>
-    <span style="color:red">${error}</span>
-    <form action="updateProfile" method="post"  enctype="multipart/form-data">
-        <div class="row">
+<div class="otp-card">
+    <h3 class="text-center mb-4">🔐 Secure OTP Login</h3>
 
-            <!-- Left Column -->
-            <div class="col-md-6">
-
-                <div class="mb-3">
-                    <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name"
-                           value="${dto.name}" required>
-                </div>
-                <div>
-                    <img src="download?fileName=${dto.imagePath}" width="100" height="100" >
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email (Read Only)</label>
-                    <input type="text" class="form-control" id="email" name="email"
-                           value="${dto.email}" readonly>
-                </div>
-                <div class="mb-3">
-                    <label for="phoneNumber" class="form-label">Phone Number</label>
-                    <input type="number" class="form-control" id="phoneNumber" name="phoneNumber"
-                           value="${dto.phoneNumber}" required>
-                </div>
-
-            </div>
-
-            <!-- Right Column -->
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="age" class="form-label">Age</label>
-                    <input type="number" class="form-control" id="age" name="age"
-                           value="${dto.age}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required>${dto.address}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="gender" class="form-label">Gender</label>
-                    <select class="form-select" id="gender" name="gender" required>
-                        <option value="" disabled>-- Select Gender --</option>
-                        <option value="Male" ${dto.gender=='Male' ? 'selected' : ''}>Male</option>
-                        <option value="Female" ${dto.gender=='Female' ? 'selected' : ''}>Female</option>
-                        <option value="Other" ${dto.gender=='Other' ? 'selected' : ''}>Other</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Upload Profile Picture</label>
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
-                    <small id="profilePictureError" class="text-danger"></small>
-                </div>
-            </div>
+    <!-- Email Form -->
+    <form action="verifyUserEmail" method="post" class="mb-3">
+        <div class="mb-3">
+            <label for="emailId" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="emailId" name="email" value="${email}" required>
         </div>
-
-        <!-- Submit Button -->
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary mt-3">Update</button>
-        </div>
-        <span style="color:green">${success}</span>
+        <button type="submit" class="btn btn-custom w-100">Send OTP</button>
     </form>
+
+    <!-- Conditional messages -->
+    <c:choose>
+        <c:when test="${not empty error}">
+            <div class="alert alert-danger text-center py-2">${error}</div>
+        </c:when>
+        <c:when test="${not empty result and result eq 'verified'}">
+            <div class="alert alert-success text-center py-2">OTP sent to your email.</div>
+        </c:when>
+    </c:choose>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
